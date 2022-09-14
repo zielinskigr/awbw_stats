@@ -1,0 +1,21 @@
+{
+    "name": "AWBW Stats",
+    "description": "Advanced visual stats for Advance Wars By Web.",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "icons": {
+        "16": "/res/img/recon.gif",
+        "32": "/res/img/recon.gif",
+        "48": "/res/img/recon.gif",
+        "128": "/res/img/recon.gif"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://awbw.amarriner.com/2030.php*"],
+            "js": [
+                "lib/chart.min.js",
+                "dist/advanced_stats.js"
+            ]
+        }
+    ]
+}
