@@ -17,5 +17,8 @@
                 "dist/advanced_stats.js"
             ]
         }
+    ],
+    "host_permissions": [
+        "https://awbw.amarriner.com/*"
     ]
 }
