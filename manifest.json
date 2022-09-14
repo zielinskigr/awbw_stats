@@ -2,7 +2,7 @@
     "name": "AWBW Stats",
     "description": "Advanced visual stats for Advance Wars By Web.",
     "version": "0.1.0",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "icons": {
         "16": "/res/img/stats16.png",
         "32": "/res/img/stats32.png",
