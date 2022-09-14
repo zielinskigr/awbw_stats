@@ -30,10 +30,10 @@ async function getStats(gameId) {
 export async function workOnStats() {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const gameId = urlSearchParams.get("games_id");
-  console.log(gameId);
+  // console.log(gameId);
   const playerTurns = await getStats(gameId);
 
-  console.log(playerTurns);
+  // console.log(playerTurns);
 
   let chartData = {};
   Object.keys(playerTurns).forEach((playerId) => {
