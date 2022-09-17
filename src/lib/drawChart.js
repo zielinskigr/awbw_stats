@@ -1,7 +1,7 @@
-import { countryColorMap, countryNameMap } from "./mappings";
 import { workOnStats } from "./getStats";
 import { element } from "./components/element";
-import { drawCharts, generateChartDatasets } from "./datasets";
+import { drawCharts } from "./datasets";
+import { charts } from "./charts";
 
 export async function generateCharts() {
   const container = document.getElementById("gamecontainer");
@@ -46,9 +46,13 @@ function displayChart() {
 
     button.onclick = () => {
       Object.keys(charts).forEach((subChartId) => {
-        document.getElementById(charts[subChartId].button.chartName).setAttribute("style", "display: none;")
-      })
-      document.getElementById(charts[chartId].button.chartName).setAttribute("style", "display: block;")
+        document
+          .getElementById(charts[subChartId].button.chartName)
+          .setAttribute("style", "display: none;");
+      });
+      document
+        .getElementById(charts[chartId].button.chartName)
+        .setAttribute("style", "display: block;");
     };
 
     let canvas = element({
@@ -61,7 +65,7 @@ function displayChart() {
 
     buttons.push(button);
     chartsCanvases.push(canvas);
-  })
+  });
 
   const closeButton = element({
     tag: "div",
@@ -87,10 +91,7 @@ function displayChart() {
         "position:relative;display: flex;flex-flow: row;justify-content: space-around;margin-top: -25px;margin-bottom: 10px;cursor: pointer;",
       ],
     ],
-    children: [
-      ...buttons,
-      closeButton,
-    ],
+    children: [...buttons, closeButton],
   });
   const loader = element({
     tag: "div",
@@ -108,57 +109,8 @@ function displayChart() {
         "position: relative; margin-top:20px;top: 33%;max-width: 1000px;width: 100%;height: 500px;padding: 40px 20px 20px;background: #fff;overflow: hidden;display: flex;flex-flow: column;",
       ],
     ],
-    children: [
-      chartsMenu,
-      loader,
-      ...chartsCanvases
-    ],
+    children: [chartsMenu, loader, ...chartsCanvases],
   });
 
   return chartContainer;
 }
-
-const charts = {
-  fundschart: {
-    button: {
-      id: "fundsbutton",
-      children: 'Total Funds',
-      chartName: "fundschart"
-    },
-  },
-  incomechart: {
-    button: {
-      id: "incomebutton",
-      children: 'Income',
-      chartName: "incomechart"
-    },
-  },
-  ucchart: {
-    button: {
-      id: "ucbutton",
-      children: 'Unit Count',
-      chartName: "ucchart"
-    },
-  },
-  uvchart: {
-    button: {
-      id: "uvbutton",
-      children: 'Army Value',
-      chartName: "uvchart"
-    },
-  },
-  hpchart: {
-    button: {
-      id: "hpbutton",
-      children: 'Unit HP',
-      chartName: "hpchart"
-    },
-  },
-  hpcchart: {
-    button: {
-      id: "hpcbutton",
-      children: 'Unit HP/Count',
-      chartName: "hpcchart"
-    },
-  },
-};
