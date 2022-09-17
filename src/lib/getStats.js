@@ -30,10 +30,9 @@ async function getStats(gameId) {
 export async function workOnStats() {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const gameId = urlSearchParams.get("games_id");
-  // console.log(gameId);
   const playerTurns = await getStats(gameId);
 
-  // console.log(playerTurns);
+  // console.log("playerTurns", playerTurns);
 
   let chartData = {};
   Object.keys(playerTurns).forEach((playerId) => {
@@ -47,9 +46,30 @@ export async function workOnStats() {
       income: [],
       unitCount: [],
       unitValue: [],
+      unitHP: [],
+      unitHPCount: [],
     };
     playerTurns[playerId].turnsArray.forEach((turn) => {
+      // Prepare funds
       totalFunds += turn.gameState.players[playerId].players_funds;
+
+      // Prepare HP
+      let hp = 0;
+
+      Object.values(turn.gameState.units).forEach((unit) => {
+        if (unit.units_players_id == playerId) {
+          // console.log("unit", unit);
+          // console.log("hp", unit.units_hit_points);
+          hp += unit.units_hit_points;
+          // console.log("total", hp);
+        }
+      });
+
+      // Prepare HP/Count
+
+      let hpc = hp/turn.gameState.players_units_count[playerId].total
+
+      // Assign matrixes
       chartData[playerId].funds.push(totalFunds);
       chartData[playerId].income.push(
         turn.gameState.players[playerId].players_income
@@ -60,6 +80,8 @@ export async function workOnStats() {
       chartData[playerId].unitValue.push(
         turn.gameState.players_units_count[playerId].value
       );
+      chartData[playerId].unitHP.push(hp);
+      chartData[playerId].unitHPCount.push(hpc);
     });
   });
 

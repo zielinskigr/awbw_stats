@@ -1,20 +1,84 @@
 export const countryColorMap = {
-  1: "rgb(244,98,67)",
-  2: "rgb(68,110,255)",
-  3: "rgb(18,216,21)",
-  4: "rgb(251,212,18)",
-  5: "rgb(138,62,150)",
-  6: "rgb(196,68,61)",
-  7: "rgb(153,155,152)",
-  8: "rgb(197,137,80)",
-  9: "rgb(252,163,57)",
-  10: "rgb(203,221,186)",
-  16: "rgb(27,67,189)",
-  17: "rgb(254,104,207)",
-  19: "rgb(58,207,193)",
-  20: "rgb(206,100,254)",
-  21: "rgb(95,124,12)",
-  22: "rgb(187,83,79)",
+  1: {
+    primary: "#F46243",
+    secondary: "#F89F8B",
+    tertiary: "#D4310C",
+  },
+  2: {
+    primary: "#446EFF",
+    secondary: "#99AFFF",
+    tertiary: "#001F8F",
+  },
+  3: {
+    primary: "#12D815",
+    secondary: "#8EF690",
+    tertiary: "#064B07",
+  },
+  4: {
+    primary: "#FBD412",
+    secondary: "#FDE986",
+    tertiary: "#B59703",
+  },
+  5: {
+    primary: "#8A3E96",
+    secondary: "#C78BD0",
+    tertiary: "#5D2965",
+  },
+  6: {
+    primary: "#C4443D",
+    secondary: "#CF6863",
+    tertiary: "#9C3530",
+  },
+  7: {
+    primary: "#999B98",
+    secondary: "#C2C2C1",
+    tertiary: "#525251",
+  },
+  8: {
+    primary: "#C58950",
+    secondary: "#DBB694",
+    tertiary: "#8A5A2E",
+  },
+  9: {
+    primary: "#FCA339",
+    secondary: "#FDC886",
+    tertiary: "#DD7B03",
+  },
+  10: {
+    primary: "#CBDDBA",
+    secondary: "#A2C284",
+    tertiary: "#6F964A",
+  },
+  16: {
+    primary: "#1B43BD",
+    secondary: "#3B65E3",
+    tertiary: "#122D7D",
+  },
+  17: {
+    primary: "#FE68CF",
+    secondary: "#FE9ADF",
+    tertiary: "#FD0DB1",
+  },
+  19: {
+    primary: "#3ACFC1",
+    secondary: "#7CDFD5",
+    tertiary: "#208379",
+  },
+  20: {
+    primary: "#CE64FE",
+    secondary: "#DF9AFE",
+    tertiary: "#A602F2",
+  },
+  21: {
+    primary: "#5F7C0C",
+    secondary: "#8DBA12",
+    tertiary: "#B3E920",
+  },
+  22: {
+    primary: "#BB534F",
+    secondary: "#C66F6C",
+    tertiary: "#E2B7B6",
+  },
 };
 
 export const countryNameMap = {
