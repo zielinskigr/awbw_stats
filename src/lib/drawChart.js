@@ -1,6 +1,5 @@
 import { workOnStats } from "./getStats";
 import { element } from "./components/element";
-import { drawCharts } from "./datasets";
 import { charts } from "./charts";
 
 export async function generateCharts() {
@@ -30,7 +29,7 @@ export async function generateCharts() {
   };
 
   const maxTurns = Math.max(...turns(chartsData));
-  const labels = Array.from(Array(maxTurns).keys());
+  const labels = Array.from(Array(maxTurns).keys(), x => x + 1);
   drawCharts(chartsData, labels);
 }
 
@@ -113,4 +112,24 @@ function displayChart() {
   });
 
   return chartContainer;
+}
+
+export function drawCharts(chartsData, labels) {
+  let datasets = generateChartDatasets(chartsData);
+  console.log("datasets", datasets);
+
+  Object.keys(charts).forEach((chartId) => {
+    const data = {
+      labels: labels,
+      datasets: datasets[charts[chartId].dataset[0].name],
+    };
+    const config = {
+      type: charts[chartId].dataset[0].type,
+      data: data,
+      options: {},
+    };
+    new Chart(document.getElementById(chartId), config);
+  })
+  
+  document.getElementById("fundschart").setAttribute("style", "display: block;");
 }
