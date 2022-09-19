@@ -74,9 +74,8 @@ export async function workOnStats() {
         chartData[players[1]].damageTaken[turnNumber] = 0;
       }
       // Store turn units
-      if (!chartData[playerId].units[turnNumber]) {
-        chartData[playerId].units.push(turn.gameState.units);
-      }
+      chartData[players[0]].units[turnNumber] = turn.gameState.units;
+      chartData[players[1]].units[turnNumber] = turn.gameState.units;
 
       // Prepare funds
       totalFunds += turn.gameState.players[playerId].players_funds;
@@ -113,6 +112,7 @@ export async function workOnStats() {
             }
             if (action.hpChange.hpLoss) {
               action.hpChange.hpLoss.players.forEach((changePlayerId) => {
+                // console.log(playerId, changePlayerId, action.hpChange)
                 Object.values(chartData[changePlayerId].units[turnNumber]).forEach((changeUnit) => {
                   chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points += action.hpChange.hpLoss.hp;
                   if (chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points <= 0) {
