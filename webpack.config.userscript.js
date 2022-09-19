@@ -4,7 +4,7 @@ const UserScriptMetaDataPlugin = require("userscript-metadata-webpack-plugin");
 let metadata = {
   name: "AWBW Stats",
   namespace: "https://github.com/zielinskigr/awbw_stats/",
-  version: "0.2.1",
+  version: "0.2.2",
   author: "zielinskigr",
   source: "https://github.com/zielinskigr/awbw_stats/",
   // 'license': 'MIT',

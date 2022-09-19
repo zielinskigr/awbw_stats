@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          AWBW Stats
 // @namespace     https://github.com/zielinskigr/awbw_stats/
-// @version       0.2.1
+// @version       0.2.2
 // @author        zielinskigr
 // @source        https://github.com/zielinskigr/awbw_stats/
 // @match         https://awbw.amarriner.com/2030.php*
@@ -99,7 +99,6 @@ async function workOnStats() {
       income: [],
       unitCount: [],
       unitValue: [],
-      unitValue2: [],
       unitHP: [],
       unitHPCount: [],
       captureCount: [],
@@ -144,7 +143,7 @@ async function workOnStats() {
       });
 
       // Prepare HP/Count
-      let hpc = hp/turn.gameState.players_units_count[playerId].total
+      let hpc = hp / turn.gameState.players_units_count[playerId].total;
 
       // Handle Actions
       let captures = 0;
@@ -228,9 +227,6 @@ async function workOnStats() {
       );
       chartData[playerId].unitValue.push(
         turn.gameState.players_units_count[playerId].value
-      );
-      chartData[playerId].unitValue2.push(
-        turn.gameState.players_units_count[playerId].value/1000
       );
       chartData[playerId].unitHP.push(hp);
       chartData[playerId].unitHPCount.push(hpc);
