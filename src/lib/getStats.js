@@ -1,5 +1,4 @@
 import { fetchGameInfo } from "./../api/fetchData";
-import { charts } from "./charts";
 import { delay } from "./helpers";
 
 async function getStats(gameId) {
@@ -76,11 +75,8 @@ export async function workOnStats() {
         chartData[players[1]].damageTaken[turnNumber] = 0;
       }
       // Store turn units
-      if (!chartData[players[0]].units[turnNumber]) {
-        chartData[players[0]].units.push(turn.gameState.units);
-      }
-      if (!chartData[players[1]].units[turnNumber]) {
-        chartData[players[1]].units.push(turn.gameState.units);
+      if (!chartData[playerId].units[turnNumber]) {
+        chartData[playerId].units.push(turn.gameState.units);
       }
 
       // Prepare funds
@@ -90,10 +86,7 @@ export async function workOnStats() {
       let hp = 0;
       Object.values(turn.gameState.units).forEach((unit) => {
         if (unit.units_players_id == playerId) {
-          // console.log("unit", unit);
-          // console.log("hp", unit.units_hit_points);
           hp += unit.units_hit_points;
-          // console.log("total", hp);
         }
       });
 
@@ -111,15 +104,11 @@ export async function workOnStats() {
           if (action.hpChange) {
             if (action.hpChange.hpGain) {
               action.hpChange.hpGain.players.forEach((changePlayerId) => {
-                // console.log(changePlayerId);
-                // console.log(chartData[changePlayerId].units[turnNumber])
                 Object.values(chartData[changePlayerId].units[turnNumber]).forEach((changeUnit) => {
-                  // console.log("gain", action.hpChange.hpGain.hp, chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points);
                   chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points += action.hpChange.hpGain.hp;
                   if (chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points >= 10) {
                     chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points = 10;
                   }
-                  // console.log("postgain", action.hpChange.hpGain.hp, chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points);
                 })
               })
             }

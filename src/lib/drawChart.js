@@ -1,6 +1,7 @@
 import { workOnStats } from "./getStats";
 import { element } from "./components/element";
 import { charts } from "./charts";
+import { generateChartDatasets } from "./datasets";
 
 export async function generateCharts() {
   const container = document.getElementById("gamecontainer");
