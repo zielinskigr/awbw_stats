@@ -21,4 +21,4 @@ Compiled userscript can be found [here](https://github.com/zielinskigr/awbw_stat
 [Charts.js](https://www.chartjs.org/) for chart generator plugin
 
 ## Note
-This is experimental version, please report any problems or bugs on AWBW discord (zielinskigr#7895) or via github issue
+This is experimental version, use at own risk and please report any problems or bugs on AWBW discord (zielinskigr#7895) or via github issue.
