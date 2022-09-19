@@ -32,7 +32,7 @@ export async function workOnStats() {
   const gameId = urlSearchParams.get("games_id");
   const playerTurns = await getStats(gameId);
 
-  console.log("playerTurns", playerTurns);
+  // console.log("playerTurns", playerTurns);
 
   let chartData = {};
   Object.keys(playerTurns).forEach((playerId) => {
@@ -54,7 +54,7 @@ export async function workOnStats() {
       coPowers: [],
     };
   });
-  console.log("chartdata", chartData);
+  // console.log("chartdata", chartData);
   const players = Object.keys(chartData);
   Object.keys(playerTurns).forEach((playerId) => {
     let totalFunds = 0;
@@ -162,8 +162,6 @@ export async function workOnStats() {
           chartData[defenderPlayerId].damageDealt[turnNumber] += damageTaken;
         }
       });
-
-
       // Assign matrixes
       chartData[playerId].funds.push(totalFunds);
       chartData[playerId].income.push(

@@ -117,7 +117,7 @@ function displayChart() {
 
 export function drawCharts(chartsData, labels) {
   let datasets = generateChartDatasets(chartsData);
-  console.log("datasets", datasets);
+  // console.log("datasets", datasets);
 
   Object.keys(charts).forEach((chartId) => {
     const data = {

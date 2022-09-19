@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          AWBW Stats
 // @namespace     https://github.com/zielinskigr/awbw_stats/
-// @version       0.2.2
+// @version       0.2.3
 // @author        zielinskigr
 // @source        https://github.com/zielinskigr/awbw_stats/
 // @match         https://awbw.amarriner.com/2030.php*
@@ -85,7 +85,7 @@ async function workOnStats() {
   const gameId = urlSearchParams.get("games_id");
   const playerTurns = await getStats(gameId);
 
-  console.log("playerTurns", playerTurns);
+  // console.log("playerTurns", playerTurns);
 
   let chartData = {};
   Object.keys(playerTurns).forEach((playerId) => {
@@ -107,7 +107,7 @@ async function workOnStats() {
       coPowers: [],
     };
   });
-  console.log("chartdata", chartData);
+  // console.log("chartdata", chartData);
   const players = Object.keys(chartData);
   Object.keys(playerTurns).forEach((playerId) => {
     let totalFunds = 0;
@@ -215,8 +215,6 @@ async function workOnStats() {
           chartData[defenderPlayerId].damageDealt[turnNumber] += damageTaken;
         }
       });
-
-
       // Assign matrixes
       chartData[playerId].funds.push(totalFunds);
       chartData[playerId].income.push(
@@ -652,7 +650,7 @@ function displayChart() {
 
 function drawCharts(chartsData, labels) {
   let datasets = generateChartDatasets(chartsData);
-  console.log("datasets", datasets);
+  // console.log("datasets", datasets);
 
   Object.keys(charts).forEach((chartId) => {
     const data = {
