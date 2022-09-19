@@ -4,7 +4,7 @@ const UserScriptMetaDataPlugin = require("userscript-metadata-webpack-plugin");
 let metadata = {
   name: "AWBW Stats",
   namespace: "https://github.com/zielinskigr/awbw_stats/",
-  version: "0.2.0",
+  version: "0.1.0",
   author: "zielinskigr",
   source: "https://github.com/zielinskigr/awbw_stats/",
   // 'license': 'MIT',
@@ -14,7 +14,7 @@ let metadata = {
   require: [
     `https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js`,
   ],
-  'image': 'https://raw.githubusercontent.com/zielinskigr/awbw_stats/main/res/img/stats128.png',
+  'icon': 'https://raw.githubusercontent.com/zielinskigr/awbw_stats/main/res/img/stats128.png',
   'description': 'Enchanced Stats Charts for Advance Wars By Web'
 }
 
