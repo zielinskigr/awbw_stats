@@ -1,6 +1,15 @@
 # awbw_stats
 Enchanced statistics for AWBW games
 
+## Installation
+### Chrome
+Working on adding it to chrome webstore
+
+### Firefox
+Wokring on adding it to mozilla addonns
+
+### Tampermonkey/Other Userscript manager
+Compiled userscript can be found [here](https://github.com/zielinskigr/awbw_stats/raw/main/dist/advanced_stats.user.js)
 ## How to use
 - This works only for 2 player games, best on completed games or ongoing STD/HF games.
 - "Stats" button has been added to game controls on its left
