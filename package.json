@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack -c webpack.config.dev.js",
     "userscript": "webpack -c webpack.config.userscript.js",
     "compile": "webpack && npm run userscript"
   },

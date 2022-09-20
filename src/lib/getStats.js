@@ -1,5 +1,7 @@
 import { fetchGameInfo } from "./../api/fetchData";
 import { delay } from "./helpers";
+import { handleActions } from "./actionParser";
+
 
 async function getStats(gameId) {
   const gameInfo = await fetchGameInfo(gameId);
@@ -92,76 +94,11 @@ export async function workOnStats() {
       let hpc = hp / turn.gameState.players_units_count[playerId].total;
 
       // Handle Actions
-      let captures = 0;
-      let damageDealt = 0;
-      let damageTaken = 0;
-      Object.values(turn.actions).forEach((action) => {
-        // Handle powers
-        if (action.action === 'Power') {
-          chartData[playerId].coPowers[turnNumber]++;
-          if (action.hpChange) {
-            if (action.hpChange.hpGain) {
-              action.hpChange.hpGain.players.forEach((changePlayerId) => {
-                Object.values(chartData[changePlayerId].units[turnNumber]).forEach((changeUnit) => {
-                  chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points += action.hpChange.hpGain.hp;
-                  if (chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points >= 10) {
-                    chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points = 10;
-                  }
-                })
-              })
-            }
-            if (action.hpChange.hpLoss) {
-              action.hpChange.hpLoss.players.forEach((changePlayerId) => {
-                // console.log(playerId, changePlayerId, action.hpChange)
-                Object.values(chartData[changePlayerId].units[turnNumber]).forEach((changeUnit) => {
-                  chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points += action.hpChange.hpLoss.hp;
-                  if (chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points <= 0) {
-                    chartData[changePlayerId].units[turnNumber][changeUnit.units_id].units_hit_points = 0;
-                  }
-                })
-              })
-            }
-          }
-        }
-        // Handle captures
-        if (action.action === 'Capt' && action.buildingInfo.buildings_capture == 20) {
-          captures++;
-        }
-        // Handle damage
-        if (action.action === "Fire") {
-          let attackerId = action.attacker.units_id;
-          let attackerPlayerId = chartData[playerId].units[turnNumber][attackerId].units_players_id;
-          let attackerCost = chartData[playerId].units[turnNumber][attackerId].units_cost;
-          let attackerPreHP = chartData[playerId].units[turnNumber][attackerId].units_hit_points;
-          let attackerPostHp = action.attacker.units_hit_points;
-          if (attackerPostHp != 10) {
-            if (attackerPostHp == 0) {
-              damageTaken = Math.round(attackerCost / 10 * attackerPreHP);
-              chartData[playerId].units[turnNumber][attackerId].units_hit_points = 0;
-            } else {
-              damageTaken = Math.round(attackerCost / 10 * (attackerPreHP - attackerPostHp));
-              chartData[playerId].units[turnNumber][attackerId].units_hit_points = attackerPostHp;
 
-            }
-          }
-          let defenderId = action.defender.units_id; 
-          let defenderPlayerId = turn.gameState.units[defenderId].units_players_id;
-          let defenderCost = chartData[playerId].units[turnNumber][defenderId].units_cost;
-          let defenderPreHp = chartData[playerId].units[turnNumber][defenderId].units_hit_points;
-          let defenderPostHp = action.defender.units_hit_points;
-          if (defenderPostHp != 10) {
-            if (defenderPostHp == 0) {
-              damageDealt = Math.round(defenderCost / 10 * defenderPreHp);
-              chartData[playerId].units[turnNumber][defenderId].units_hit_points = 0;
-            } else {
-              damageDealt = Math.round(defenderCost / 10 * (defenderPreHp - defenderPostHp));
-              chartData[playerId].units[turnNumber][defenderId].units_hit_points = defenderPostHp;
-            }
-          }
-          chartData[attackerPlayerId].damageDealt[turnNumber] += damageDealt;
-          chartData[defenderPlayerId].damageDealt[turnNumber] += damageTaken;
-        }
-      });
+      const actionsHandled = handleActions(turn, chartData);
+      chartData = actionsHandled.chartData;
+      const captures = actionsHandled.captures;
+      
       // Assign matrixes
       chartData[playerId].funds.push(totalFunds);
       chartData[playerId].income.push(

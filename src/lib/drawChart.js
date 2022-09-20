@@ -48,17 +48,17 @@ function displayChart() {
       Object.keys(charts).forEach((subChartId) => {
         document
           .getElementById(charts[subChartId].button.chartName)
-          .setAttribute("style", "display: none;");
+          .setAttribute("style", "display: none;max-width: 100%!important;");
       });
       document
         .getElementById(charts[chartId].button.chartName)
-        .setAttribute("style", "display: block;");
+        .setAttribute("style", "display: block;max-width: 100%!important;");
     };
 
     let canvas = element({
       tag: "canvas",
       attributes: [
-        ["style", "display: none;"],
+        ["style", "display: none;max-width: 100%!important;"],
         ["id", charts[chartId].button.chartName],
       ],
     });
@@ -100,6 +100,14 @@ function displayChart() {
       "Fetching game data, this can take up to a minute depending on game length, please wait...",
     ],
   });
+  const chartsWrapper = element({
+    tag: "div",
+    attributes: [
+      ["id", "chartswrapper"],
+      ["style", "position: relative; width: 100%;"]
+    ],
+    children: [loader, ...chartsCanvases]
+  })
   const chartContainer = element({
     tag: "div",
     attributes: [
@@ -109,7 +117,7 @@ function displayChart() {
         "position: relative; margin-top:20px;top: 33%;max-width: 1000px;width: 100%;height: 500px;padding: 40px 20px 20px;background: #fff;overflow: hidden;display: flex;flex-flow: column;",
       ],
     ],
-    children: [chartsMenu, loader, ...chartsCanvases],
+    children: [chartsMenu, chartsWrapper],
   });
 
   return chartContainer;
