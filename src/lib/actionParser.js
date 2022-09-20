@@ -1,4 +1,4 @@
-export const handleActions = (turn, chartData) => {
+export const handleActions = (turn, playerId, turnNumber, chartData) => {
   let captures = 0;
   let damageDealt = 0;
   let damageTaken = 0;

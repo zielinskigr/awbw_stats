@@ -1,6 +1,6 @@
 {
   "name": "awbw_stats",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Enchanced statistics for AWBW",
   "main": "index.js",
   "scripts": {

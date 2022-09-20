@@ -95,7 +95,7 @@ export async function workOnStats() {
 
       // Handle Actions
 
-      const actionsHandled = handleActions(turn, chartData);
+      const actionsHandled = handleActions(turn, playerId, turnNumber, chartData);
       chartData = actionsHandled.chartData;
       const captures = actionsHandled.captures;
       
