@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          AWBW Stats
 // @namespace     https://github.com/zielinskigr/awbw_stats/
-// @version       0.2.5
+// @version       0.2.6
 // @author        zielinskigr
 // @source        https://github.com/zielinskigr/awbw_stats/
 // @match         https://awbw.amarriner.com/2030.php*
