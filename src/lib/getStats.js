@@ -144,20 +144,20 @@ export async function workOnStats() {
       });
       if (playerId == players[0]) {
         chartData[players[0]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder[players[0]]}`,
+          x: `${turnNumber + 1}.${turnOrder[playerId]}`,
           y: damageDealt,
         });
         chartData[players[1]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder[players[1]]}`,
+          x: `${turnNumber + 1}.${turnOrder[playerId]}`,
           y: damageTaken,
         });
       } else {
         chartData[players[1]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder[players[1]]}`,
+          x: `${turnNumber + 1}.${turnOrder[playerId]}`,
           y: damageDealt,
         });
         chartData[players[0]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder[players[0]]}`,
+          x: `${turnNumber + 1}.${turnOrder[playerId]}`,
           y: damageTaken,
         });
       }
