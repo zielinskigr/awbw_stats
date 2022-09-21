@@ -20,7 +20,7 @@ export async function generateCharts() {
   }
   const loader = document.getElementById("chartloader");
   loader.remove();
-  console.log("CD", chartsData);
+  // console.log("CD", chartsData);
   const players = Object.keys(chartsData);
   const turns = (chartsData) => {
     let turns = [];

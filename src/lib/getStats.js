@@ -35,12 +35,30 @@ export async function workOnStats() {
   // console.log("playerTurns", playerTurns);
 
   let chartData = {};
+  const players = Object.keys(playerTurns);
+  let turnOrder = {};
+  Object.keys(playerTurns).forEach((playerId) => {
+    if (playerId == players[0]) {
+      turnOrder[playerId] =
+        playerTurns[players[0]].player.order >
+        playerTurns[players[1]].player.order
+          ? 2
+          : 1;
+    } else {
+      turnOrder[playerId] =
+        playerTurns[players[1]].player.order >
+        playerTurns[players[0]].player.order
+          ? 2
+          : 1;
+    }
+  });
   Object.keys(playerTurns).forEach((playerId) => {
     chartData[playerId] = {
       name: playerTurns[playerId].turnsArray[0].gameState.players[playerId]
         .users_username,
       turns: playerTurns[playerId].turnsArray.length,
       country: playerTurns[playerId].player.countries_id,
+      turnOrder: turnOrder[playerId],
       units: [],
       funds: [],
       income: [],
@@ -55,7 +73,7 @@ export async function workOnStats() {
     };
   });
   // console.log("chartdata", chartData);
-  const players = Object.keys(chartData);
+
   Object.keys(playerTurns).forEach((playerId) => {
     let totalFunds = 0;
     playerTurns[playerId].turnsArray.forEach((turn, turnNumber) => {
@@ -86,61 +104,60 @@ export async function workOnStats() {
         playerId,
         turnNumber,
         chartData,
-        players,
+        players
       );
-      console.log("AH", actionsHandled);
+
       chartData = actionsHandled.chartData;
       const captures = actionsHandled.captures;
       const damageDealt = actionsHandled.wholeDamageDealt;
       const damageTaken = actionsHandled.wholeDamageTaken;
 
       // Assign matrixes
-      let turnOrder = playerTurns[playerId].player.order;
 
       chartData[playerId].funds.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: totalFunds,
       });
       chartData[playerId].income.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: turn.gameState.players[playerId].players_income,
       });
       chartData[playerId].unitCount.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: turn.gameState.players_units_count[playerId].total,
       });
       chartData[playerId].unitValue.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: turn.gameState.players_units_count[playerId].value,
       });
       chartData[playerId].unitHP.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: hp,
       });
       chartData[playerId].unitHPCount.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: hpc,
       });
       chartData[playerId].captureCount.push({
-        x: `${turnNumber + 1}.${turnOrder}`,
+        x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: captures,
       });
       if (playerId == players[0]) {
         chartData[players[0]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder}`,
+          x: `${turnNumber + 1}.${turnOrder[players[0]]}`,
           y: damageDealt,
         });
         chartData[players[1]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder}`,
+          x: `${turnNumber + 1}.${turnOrder[players[1]]}`,
           y: damageTaken,
         });
       } else {
         chartData[players[1]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder}`,
+          x: `${turnNumber + 1}.${turnOrder[players[1]]}`,
           y: damageDealt,
         });
         chartData[players[0]].damageDealt.push({
-          x: `${turnNumber + 1}.${turnOrder}`,
+          x: `${turnNumber + 1}.${turnOrder[players[0]]}`,
           y: damageTaken,
         });
       }
