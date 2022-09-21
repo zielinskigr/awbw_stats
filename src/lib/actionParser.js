@@ -1,7 +1,9 @@
-export const handleActions = (turn, playerId, turnNumber, chartData) => {
+export const handleActions = (turn, playerId, turnNumber, chartData, players) => {
   let captures = 0;
   let damageDealt = 0;
   let damageTaken = 0;
+  let wholeDamageDealt = 0;
+  let wholeDamageTaken = 0;
   Object.values(turn.actions).forEach((action) => {
     // Handle powers
     if (action.action === 'Power') {
@@ -65,9 +67,9 @@ export const handleActions = (turn, playerId, turnNumber, chartData) => {
           chartData[playerId].units[turnNumber][defenderId].units_hit_points = defenderPostHp;
         }
       }
-      chartData[attackerPlayerId].damageDealt[turnNumber] += damageDealt;
-      chartData[defenderPlayerId].damageDealt[turnNumber] += damageTaken;
+      wholeDamageDealt += damageDealt;
+      wholeDamageTaken += damageTaken;
     }
   });
-  return {captures, chartData};
+  return {captures, chartData, wholeDamageDealt, wholeDamageTaken};
 }

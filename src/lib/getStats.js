@@ -2,7 +2,6 @@ import { fetchGameInfo } from "./../api/fetchData";
 import { delay } from "./helpers";
 import { handleActions } from "./actionParser";
 
-
 async function getStats(gameId) {
   const gameInfo = await fetchGameInfo(gameId);
   const turns = gameInfo.daySelector.length;
@@ -25,7 +24,6 @@ async function getStats(gameId) {
     playerTurns[turn.gameState.currentTurnPId].turnsArray.push(turn);
     i++;
   }
-
   return playerTurns;
 }
 
@@ -62,19 +60,7 @@ export async function workOnStats() {
     let totalFunds = 0;
     playerTurns[playerId].turnsArray.forEach((turn, turnNumber) => {
       chartData[playerId].coPowers[turnNumber] = 0;
-      // Set up Turn.
-      if (!chartData[players[0]].damageDealt[turnNumber]) {
-        chartData[players[0]].damageDealt[turnNumber] = 0;
-      }
-      if (!chartData[players[0]].damageTaken[turnNumber]) {
-        chartData[players[0]].damageTaken[turnNumber] = 0;
-      }
-      if (!chartData[players[1]].damageDealt[turnNumber]) {
-        chartData[players[1]].damageDealt[turnNumber] = 0;
-      }
-      if (!chartData[players[1]].damageTaken[turnNumber]) {
-        chartData[players[1]].damageTaken[turnNumber] = 0;
-      }
+
       // Store turn units
       chartData[players[0]].units[turnNumber] = turn.gameState.units;
       chartData[players[1]].units[turnNumber] = turn.gameState.units;
@@ -95,24 +81,69 @@ export async function workOnStats() {
 
       // Handle Actions
 
-      const actionsHandled = handleActions(turn, playerId, turnNumber, chartData);
+      const actionsHandled = handleActions(
+        turn,
+        playerId,
+        turnNumber,
+        chartData,
+        players,
+      );
+      console.log("AH", actionsHandled);
       chartData = actionsHandled.chartData;
       const captures = actionsHandled.captures;
-      
+      const damageDealt = actionsHandled.wholeDamageDealt;
+      const damageTaken = actionsHandled.wholeDamageTaken;
+
       // Assign matrixes
-      chartData[playerId].funds.push(totalFunds);
-      chartData[playerId].income.push(
-        turn.gameState.players[playerId].players_income
-      );
-      chartData[playerId].unitCount.push(
-        turn.gameState.players_units_count[playerId].total
-      );
-      chartData[playerId].unitValue.push(
-        turn.gameState.players_units_count[playerId].value
-      );
-      chartData[playerId].unitHP.push(hp);
-      chartData[playerId].unitHPCount.push(hpc);
-      chartData[playerId].captureCount.push(captures);
+      let turnOrder = playerTurns[playerId].player.order;
+
+      chartData[playerId].funds.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: totalFunds,
+      });
+      chartData[playerId].income.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: turn.gameState.players[playerId].players_income,
+      });
+      chartData[playerId].unitCount.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: turn.gameState.players_units_count[playerId].total,
+      });
+      chartData[playerId].unitValue.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: turn.gameState.players_units_count[playerId].value,
+      });
+      chartData[playerId].unitHP.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: hp,
+      });
+      chartData[playerId].unitHPCount.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: hpc,
+      });
+      chartData[playerId].captureCount.push({
+        x: `${turnNumber + 1}.${turnOrder}`,
+        y: captures,
+      });
+      if (playerId == players[0]) {
+        chartData[players[0]].damageDealt.push({
+          x: `${turnNumber + 1}.${turnOrder}`,
+          y: damageDealt,
+        });
+        chartData[players[1]].damageDealt.push({
+          x: `${turnNumber + 1}.${turnOrder}`,
+          y: damageTaken,
+        });
+      } else {
+        chartData[players[1]].damageDealt.push({
+          x: `${turnNumber + 1}.${turnOrder}`,
+          y: damageDealt,
+        });
+        chartData[players[0]].damageDealt.push({
+          x: `${turnNumber + 1}.${turnOrder}`,
+          y: damageTaken,
+        });
+      }
     });
   });
 

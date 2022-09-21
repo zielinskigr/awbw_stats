@@ -20,6 +20,7 @@ export async function generateCharts() {
   }
   const loader = document.getElementById("chartloader");
   loader.remove();
+  console.log("CD", chartsData);
   const players = Object.keys(chartsData);
   const turns = (chartsData) => {
     let turns = [];
@@ -30,7 +31,13 @@ export async function generateCharts() {
   };
 
   const maxTurns = Math.max(...turns(chartsData));
-  const labels = Array.from(Array(maxTurns).keys(), x => x + 1);
+  const labels = Array.from(Array(maxTurns).keys(), (x) => {
+    const labelArray = [
+      [`${x + 1}.1`],
+      [`${x + 1}.2`],
+    ];
+    return labelArray.flat();
+  }).flat();
   drawCharts(chartsData, labels);
 }
 
@@ -104,10 +111,10 @@ function displayChart() {
     tag: "div",
     attributes: [
       ["id", "chartswrapper"],
-      ["style", "position: relative; width: 100%;"]
+      ["style", "position: relative; width: 100%;"],
     ],
-    children: [loader, ...chartsCanvases]
-  })
+    children: [loader, ...chartsCanvases],
+  });
   const chartContainer = element({
     tag: "div",
     attributes: [
@@ -138,7 +145,9 @@ export function drawCharts(chartsData, labels) {
       options: {},
     };
     new Chart(document.getElementById(chartId), config);
-  })
-  
-  document.getElementById("fundschart").setAttribute("style", "display: block;");
+  });
+
+  document
+    .getElementById("fundschart")
+    .setAttribute("style", "display: block;");
 }
