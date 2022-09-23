@@ -10,6 +10,9 @@ Wokring on adding it to mozilla addonns
 
 ### Tampermonkey/Other Userscript manager
 Compiled userscript can be found [here](https://github.com/zielinskigr/awbw_stats/raw/main/dist/advanced_stats.user.js)
+Also available on [Greasy Fork](https://greasyfork.org/pl/scripts/451910-awbw-stats)
+
+
 ## How to use
 - This works only for 2 player games, best on completed games or ongoing STD/HF games.
 - "Stats" button has been added to game controls on its left
