@@ -3,7 +3,7 @@ Enchanced statistics for AWBW games
 
 ## Installation
 ### Chrome
-Working on adding it to chrome webstore
+AWBW Stats is available as [Chrome extension](https://chrome.google.com/webstore/detail/awbw-stats/mlognfgbbnlkmmheokgfndlcgelmkhna)
 
 ### Firefox
 Wokring on adding it to mozilla addonns
