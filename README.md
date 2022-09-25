@@ -6,7 +6,7 @@ Enchanced statistics for AWBW games
 AWBW Stats is available as [Chrome extension](https://chrome.google.com/webstore/detail/awbw-stats/mlognfgbbnlkmmheokgfndlcgelmkhna)
 
 ### Firefox
-Wokring on adding it to mozilla addonns
+AWBW Stats is available on [Mozilla addons](https://addons.mozilla.org/en-US/firefox/addon/awbw-stats/)
 
 ### Tampermonkey/Other Userscript manager
 Compiled userscript can be found [here](https://github.com/zielinskigr/awbw_stats/raw/main/dist/advanced_stats.user.js)
