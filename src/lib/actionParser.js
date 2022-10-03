@@ -1,13 +1,22 @@
-export const handleActions = (turn, playerId, turnNumber, chartData, players) => {
+export const handleActions = (turn, playerId, turnNumber, chartData, totalFunds, players) => {
   let captures = 0;
   let damageDealt = 0;
   let damageTaken = 0;
   let wholeDamageDealt = 0;
   let wholeDamageTaken = 0;
+  let fundsGenerated = {};
+  players.forEach((player) => {
+    fundsGenerated[player] = {};
+    fundsGenerated[player]["funds"] = 0;
+    fundsGenerated[player]["turnNumber"] = turnNumber;
+    fundsGenerated[player]["turnOrder"] = chartData[playerId]["turnOrder"];
+  })
   Object.values(turn.actions).forEach((action) => {
     // Handle powers
     if (action.action === 'Power') {
       chartData[playerId].coPowers[turnNumber]++;
+      
+      // Handle HP powers
       if (action.hpChange) {
         if (action.hpChange.hpGain) {
           action.hpChange.hpGain.players.forEach((changePlayerId) => {
@@ -30,6 +39,15 @@ export const handleActions = (turn, playerId, turnNumber, chartData, players) =>
             })
           })
         }
+      }
+
+      // Handle Money Powers
+      if (action.playerReplace) {
+        Object.keys(action.playerReplace).forEach((changePlayerId) => {
+          if (action.playerReplace[changePlayerId].players_funds) {
+            fundsGenerated[changePlayerId]["funds"] = (Math.round(action.playerReplace[changePlayerId].players_funds * 0.333333, 0));
+          }
+        })
       }
     }
     // Handle captures
@@ -69,7 +87,14 @@ export const handleActions = (turn, playerId, turnNumber, chartData, players) =>
       }
       wholeDamageDealt += damageDealt;
       wholeDamageTaken += damageTaken;
+
+      // Handle gained funds
+      if (action.gainedFunds) {
+        Object.keys(action.gainedFunds).forEach((changePlayerId) => {
+          fundsGenerated[changePlayerId]["funds"] += action.gainedFunds[changePlayerId];
+        })
+      }
     }
   });
-  return {captures, chartData, wholeDamageDealt, wholeDamageTaken};
+  return {captures, chartData, wholeDamageDealt, wholeDamageTaken, fundsGenerated};
 }

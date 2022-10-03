@@ -55,17 +55,17 @@ function displayChart() {
       Object.keys(charts).forEach((subChartId) => {
         document
           .getElementById(charts[subChartId].button.chartName)
-          .setAttribute("style", "display: none;max-width: 100%!important;");
+          .setAttribute("style", "display: none;max-width: 100%!important; width: 100%!important;");
       });
       document
         .getElementById(charts[chartId].button.chartName)
-        .setAttribute("style", "display: block;max-width: 100%!important;");
+        .setAttribute("style", "display: block;max-width: 100%!important; width: 100%!important;");
     };
 
     let canvas = element({
       tag: "canvas",
       attributes: [
-        ["style", "display: none;max-width: 100%!important;"],
+        ["style", "display: none;max-width: 100%!important;width: 100%!important;"],
         ["id", charts[chartId].button.chartName],
       ],
     });

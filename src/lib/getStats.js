@@ -19,7 +19,7 @@ async function getStats(gameId) {
   let turn;
   let i = 0;
   while (i < turns) {
-    await delay(250);
+    await delay(200);
     turn = await fetchGameInfo(gameId, i);
     playerTurns[turn.gameState.currentTurnPId].turnsArray.push(turn);
     i++;
@@ -70,9 +70,11 @@ export async function workOnStats() {
       damageDealt: [],
       damageTaken: [],
       coPowers: [],
+      coPowerData: [],
     };
   });
   // console.log("chartdata", chartData);
+  let fundsGenerated = [];
 
   Object.keys(playerTurns).forEach((playerId) => {
     let totalFunds = 0;
@@ -84,7 +86,7 @@ export async function workOnStats() {
       chartData[players[1]].units[turnNumber] = turn.gameState.units;
 
       // Prepare funds
-      totalFunds += turn.gameState.players[playerId].players_funds;
+      totalFunds += turn.gameState.players[playerId].players_income;
 
       // Prepare HP
       let hp = 0;
@@ -104,6 +106,7 @@ export async function workOnStats() {
         playerId,
         turnNumber,
         chartData,
+        totalFunds,
         players
       );
 
@@ -111,9 +114,9 @@ export async function workOnStats() {
       const captures = actionsHandled.captures;
       const damageDealt = actionsHandled.wholeDamageDealt;
       const damageTaken = actionsHandled.wholeDamageTaken;
+      fundsGenerated.push(actionsHandled.fundsGenerated);
 
       // Assign matrixes
-
       chartData[playerId].funds.push({
         x: `${turnNumber + 1}.${turnOrder[playerId]}`,
         y: totalFunds,
@@ -164,5 +167,61 @@ export async function workOnStats() {
     });
   });
 
+  Object.values(fundsGenerated).forEach((addFundsData) => {
+    Object.keys(playerTurns).forEach((playerId) => {
+      if (addFundsData[playerId].funds != 0) {
+        let searchX = `${addFundsData[playerId]["turnNumber"] + 1}.${addFundsData[playerId]["turnOrder"]}`;
+        let handled = false;
+        chartData[playerId].funds.forEach((fundArrayItem, i) => {
+          if (handled == true) {
+            chartData[playerId].funds[i].y += addFundsData[playerId]["funds"];
+          }
+          if (fundArrayItem.x == searchX) {
+            chartData[playerId].funds[i].y += addFundsData[playerId]["funds"];
+            handled = true;
+          } 
+        });
+        if (!handled) {
+          if (chartData[playerId].turnOrder < addFundsData[playerId]["turnOrder"]) {
+            let previousFunds = chartData[playerId].funds[addFundsData[playerId]["turnNumber"]].y;
+            chartData[playerId].funds.forEach((fundArrayItem, i) => {
+              if (i > addFundsData[playerId]["turnNumber"]) {
+                chartData[playerId].funds[i].y += addFundsData[playerId]["funds"];
+              }
+            });
+            chartData[playerId].funds.push({
+              x: searchX,
+              y: previousFunds + addFundsData[playerId]["funds"],
+            });
+          }
+          else {
+            let previousFunds = chartData[playerId].funds[addFundsData[playerId]["turnNumber"] - 1].y;
+            chartData[playerId].funds.forEach((fundArrayItem, i) => {
+              if (i > addFundsData[playerId]["turnNumber"] - 1) {
+                chartData[playerId].funds[i].y += addFundsData[playerId]["funds"];
+              }
+            });
+            chartData[playerId].funds.push({
+              x: searchX,
+              y: previousFunds + addFundsData[playerId]["funds"],
+            });
+          }
+        }
+      }
+    });
+  })
+  
+  Object.keys(playerTurns).forEach((playerId) => {
+    chartData[playerId].funds.sort((a, b) => a.y - b.y);
+    chartData[playerId].coPowers.forEach((cop, i) => {
+      if (cop == 1) {
+        chartData[playerId].coPowerData.push({
+          x: `${i + 1}.${turnOrder[playerId]}`,
+          y: 0,
+          r: 10
+        })
+      }
+    })
+  })
   return chartData;
 }

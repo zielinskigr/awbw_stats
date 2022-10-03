@@ -14,6 +14,7 @@ export function generateChartDatasets(chartsData) {
     captureDataSet: [],
     damageDealtDataSet: [],
     damageTakenDataSet: [],
+    coPowerDataSet: [],
   };
 
   // console.log("chartsData", chartsData);
@@ -29,6 +30,15 @@ export function generateChartDatasets(chartsData) {
         };
 
         datasets[charts[chartId].dataset[0].name].push(dataset);
+
+        let coDataset = {
+          label: playerData.name + " Power",
+          backgroundColor: countryColorMap[playerData.country].secondary,
+          borderColor: countryColorMap[playerData.country].secondary,
+          data: playerData["coPowerData"],
+          type: "bubble"
+        }
+        datasets[charts[chartId].dataset[0].name].push(coDataset);
       });
     }
   });
