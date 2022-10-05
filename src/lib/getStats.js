@@ -19,7 +19,7 @@ async function getStats(gameId) {
   let turn;
   let i = 0;
   while (i < turns) {
-    await delay(200);
+    await delay(250);
     turn = await fetchGameInfo(gameId, i);
     playerTurns[turn.gameState.currentTurnPId].turnsArray.push(turn);
     i++;
